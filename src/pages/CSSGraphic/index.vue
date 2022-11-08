@@ -6,7 +6,7 @@
       </label>
 
       <div class="tips">
-        请勿选择太大的图片，以免造成浏览器崩溃
+        请勿选择太大的图片，以免造成浏览器崩溃(建议使用 100kb 以下图片)
       </div>
 
       <input
@@ -37,16 +37,17 @@ type PixelData = {
 }
 
 const wrapperRef = ref<HTMLDivElement>()
-const imgData = ref<PixelData[]>([])
+const imgData = ref<PixelData[][]>([])
 const width = ref(0)
 const height = ref(0)
 const loading = ref(false)
 
 const bg = computed(() => {
-  return imgData.value.reduce((prev, pixelData) => {
-    return prev + `${prev ? ',' : ''}linear-gradient(${pixelData.color}, ${pixelData.color}) no-repeat ${pixelData.x}px ${pixelData.y}px/1px 1px`
+  return imgData.value.map(item => item.reduce((prev, pixelData) => {
+    return prev + `${prev ? ',' : ''}linear-gradient(${pixelData.color}, ${pixelData.color}) no-repeat ${pixelData.x}px 0/1px 1px`
+    // return prev + `${prev ? ',' : ''}linear-gradient(${pixelData.color}, ${pixelData.color}) no-repeat ${pixelData.x}px ${pixelData.y}px/1px 1px`
     // return prev + `${prev ? ',' : ''}${pixelData.x}px ${pixelData.y}px ${pixelData.color}`
-  }, '')
+  }, ''))
 })
 
 const oImg = new Image()
@@ -71,13 +72,13 @@ oImg.onload = () => {
   let x = 0
   let y = 0
 
-  const arr: PixelData[] = []
+  const arr: PixelData[][] = [[]]
 
   ctx.clearRect(0, 0, w, h)
 
   for (let i = 0; i < data.length; i++) {
     if ((i + 1) % 4 === 0) {
-      arr.push({
+      arr[y].push({
         x: x + 1,
         y,
         color: `rgba(${data[i - 3]}, ${data[i - 2]}, ${data[i - 1]}, ${data[i] / 255})`
@@ -86,6 +87,9 @@ oImg.onload = () => {
       if (++x % w === 0) {
         x = 0
         y++
+        if (y < h) {
+          arr.push([])
+        }
       }
     }
   }
@@ -102,16 +106,19 @@ const handleFileChange = (e: Event) => {
 }
 
 watch(bg, () => {
-  const html = `
-    <div
-      style="
-        width: ${width.value}px;
-        height: ${height.value}px;
-        background: ${bg.value};
-      "
-    />
-    </div>
-  `
+  const html = bg.value.reduce((prev, item) => {
+    return prev + `
+      <div
+        style="
+          width: ${width.value}px;
+          height: 1px;
+          background: ${item};
+        "
+      />
+      </div>
+    `
+  }, '')
+
   wrapperRef.value!.innerHTML = html
 })
 </script>
