@@ -17,6 +17,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '转场动画'
     }
+  },
+  {
+    path: '/css-graphic',
+    name: 'CSSGraphic',
+    component: () => import('../pages/CSSGraphic/index.vue'),
+    meta: {
+      title: 'CSS图像'
+    }
   }
 ]
 
