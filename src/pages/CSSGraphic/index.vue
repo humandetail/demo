@@ -138,10 +138,12 @@ watch(bg, () => {
       border: 1px solid #f1f1f1;
       border-radius: 6px;
       background-color: #0088ff;
+      white-space: nowrap;
       cursor: pointer;
     }
 
     .tips {
+      flex: 1;
       font-size: 14px;
       color: #f40;
     }
