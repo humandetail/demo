@@ -25,6 +25,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'CSS图像'
     }
+  },
+  {
+    path: '/dotdotdot',
+    name: 'DotDotDot',
+    component: () => import('../pages/DotDotDot/index.vue'),
+    meta: {
+      title: '点点点'
+    }
   }
 ]
 
