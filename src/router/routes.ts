@@ -33,6 +33,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '点点点'
     }
+  },
+  {
+    path: '/dotdotdot-pro',
+    name: 'DotDotDotPro',
+    component: () => import('../pages/DotDotDotPro/index.vue'),
+    meta: {
+      title: '点点点(Pro)'
+    }
   }
 ]
 
