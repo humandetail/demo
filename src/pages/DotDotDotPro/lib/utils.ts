@@ -21,3 +21,21 @@ export const createPxItems = ({
 
   return pxItems
 }
+
+export const downloadPlainText = (textContent: string, filename: string) => {
+  const blob = new Blob([textContent], {
+    type: 'text/plain;charset=utf-8'
+  })
+
+  const reader = new FileReader()
+  reader.readAsDataURL(blob)
+
+  reader.onload = (e: any) => {
+    const a = document.createElement('a')
+    a.download = filename
+    a.href = e.target.result
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+}

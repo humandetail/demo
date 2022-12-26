@@ -23,11 +23,10 @@
           </template>
 
           <template v-else-if="item.type === 'color'">
-            <input
-              type="color"
-              :value="currentItem[item.name]"
-              @input="(e) => handleInput(item.name, e)"
-            >
+            <ColorPicker
+              :value="(currentItem[item.name] as string)"
+              @change="(e: string) => handleInput(item.name, e)"
+            />
           </template>
         </div>
       </div>
@@ -36,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import ColorPicker from '../../ColorPicker.vue'
 import { PxItem } from '../../../types'
 
 const currentItem = inject('currentItem', ref<PxItem | null>(null))
@@ -61,7 +61,7 @@ const handleInput = (name: keyof PxItem, e: any) => {
       break
     case 'fill':
     case 'stroke':
-      currentItem.value[name] = e.target.value
+      currentItem.value[name] = e
       break
   }
 }

@@ -23,11 +23,10 @@
           </template>
 
           <template v-else-if="item.type === 'color'">
-            <input
-              type="color"
-              :value="globalState[item.name]"
-              @input="(e) => handleInput(item.name, e)"
-            >
+            <ColorPicker
+              :value="(globalState[item.name] as string)"
+              @change="(e: string) => handleInput(item.name, e)"
+            />
           </template>
 
           <template v-else-if="item.type === 'range'">
@@ -63,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import ColorPicker from '../../ColorPicker.vue'
 import { GlobalState } from '../../../types'
 
 const globalState = inject<GlobalState>('globalState')!
@@ -85,6 +85,7 @@ const formItems: {
 ]
 
 const handleInput = (name: keyof GlobalState, e: any) => {
+  console.log(e)
   switch (name) {
     case 'row':
     case 'column':
@@ -99,7 +100,7 @@ const handleInput = (name: keyof GlobalState, e: any) => {
     case 'background':
     case 'fill':
     case 'stroke':
-      globalState[name] = e.target.value
+      globalState[name] = e
       break
   }
 }

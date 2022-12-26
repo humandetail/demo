@@ -1,6 +1,12 @@
 <template>
   <div class="dot-dot-dot-pro">
-    <MainCanvas />
+    <header class="header">
+      <h2>点点点（Prop）</h2>
+
+      <button @click="handleOutput">输出图像</button>
+    </header>
+
+    <MainCanvas ref="mainRef" />
     <AsideVue />
   </div>
 </template>
@@ -9,7 +15,9 @@
 import { GlobalState, ItemState, PxItem } from './types'
 import MainCanvas from './components/MainCanvas.vue'
 import AsideVue from './components/aside/index.vue'
-import { createPxItems } from './lib/utils'
+import { createPxItems, downloadPlainText } from './lib/utils'
+
+const mainRef = ref()
 
 const globalState = reactive<GlobalState>({
   row: 10,
@@ -42,6 +50,23 @@ watch(() => [globalState.row, globalState.column], () => {
   immediate: true
 })
 
+const handleOutput = () => {
+  const catched = {
+    current: currentItem.value,
+    grid: globalState.gridVisible
+  }
+  currentItem.value = null
+  globalState.gridVisible = false
+
+  const oGraph = mainRef.value?.svgRef as HTMLElement
+
+  if (oGraph) {
+    downloadPlainText(oGraph.outerHTML, 'graph.svg')
+  }
+  currentItem.value = catched.current
+  globalState.gridVisible = catched.grid
+}
+
 provide('globalState', globalState)
 provide('itemState', itemState)
 provide('pxItems', pxItems)
@@ -51,5 +76,9 @@ provide('currentItem', currentItem)
 <style lang="scss" scoped>
 .dot-dot-dot-pro * {
   box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 20px;
 }
 </style>

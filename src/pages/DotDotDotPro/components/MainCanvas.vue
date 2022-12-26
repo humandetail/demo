@@ -1,6 +1,7 @@
 <template>
   <main class="main-canvas">
     <svg
+      ref="svgRef"
       :width="width"
       :height="height"
       :view-box="`0 0 ${width} ${height}`"
@@ -91,6 +92,8 @@
 <script setup lang="ts">
 import { GlobalState, PxItem } from '../types'
 
+const svgRef = ref()
+
 const pxItems = inject('pxItems', ref<PxItem[]>([]))
 const currentItem = inject('currentItem', ref<PxItem | null>(null))
 
@@ -122,7 +125,14 @@ const handleItemClick = (item: PxItem): void => {
   currentItem.value = item
 }
 
-const handleClickOutside = () => {
-  // currentItem.value = null
+const handleClickOutside = (e: Event) => {
+  if (document.querySelector('.dot-pro-aside')!.contains((e.target as HTMLElement))) {
+    return
+  }
+  currentItem.value = null
 }
+
+defineExpose({
+  svgRef
+})
 </script>
