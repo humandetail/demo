@@ -1,7 +1,7 @@
 <template>
   <div class="dot-dot-dot-pro">
     <header class="header">
-      <h2>点点点（Prop）</h2>
+      <h2>点点点（Pro）</h2>
 
       <button @click="handleOutput">输出图像</button>
     </header>
