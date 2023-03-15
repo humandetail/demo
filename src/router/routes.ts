@@ -41,6 +41,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '点点点(Pro)'
     }
+  },
+  {
+    path: '/lines-link',
+    name: 'LinesLink',
+    component: () => import('../pages/LinesLink/index.vue'),
+    meta: {
+      title: '两点连接'
+    }
   }
 ]
 
