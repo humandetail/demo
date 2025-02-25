@@ -49,6 +49,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '两点连接'
     }
+  },
+  {
+    path: '/virtual-rocker',
+    name: 'VirtualRocker',
+    component: () => import('../pages/VirtualRocker/index.vue'),
+    meta: {
+      title: '虚拟摇杆'
+    }
   }
 ]
 
