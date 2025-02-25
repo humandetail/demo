@@ -13,3 +13,5 @@
 4. [点点点Pro](https://humandetail.github.io/demo/dotdotdot-pro)
 
 5. [两点连接](https://humandetail.github.io/demo/lines-link)
+
+6. [虚拟摇杆](https://humandetail.github.io/demo/virtual-rocker)
